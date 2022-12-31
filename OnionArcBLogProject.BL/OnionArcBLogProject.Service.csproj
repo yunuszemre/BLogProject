@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OnionArcBLogProject.Core\OnionArcBLogProject.Core.csproj" />
+    <ProjectReference Include="..\OnionArcBLogProject.Entities\OnionArcBLogProject.Entities.csproj" />
+  </ItemGroup>
+
+</Project>
