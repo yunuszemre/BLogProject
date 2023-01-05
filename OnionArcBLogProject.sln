@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnionArcBLogProject", "OnionArcBLogProject\OnionArcBLogProject.csproj", "{936F56AC-1992-4DE7-AD0D-E814154FC5C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnionArcBLogProject.WebUI", "OnionArcBLogProject\OnionArcBLogProject.WebUI.csproj", "{936F56AC-1992-4DE7-AD0D-E814154FC5C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnionArcBLogProject.Entities", "OnionArcBLogProject.Entities\OnionArcBLogProject.Entities.csproj", "{1D86191A-130A-409C-9B1C-C58AF0FD1C77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnionArcBLogProject.Entities", "OnionArcBLogProject.Entities\OnionArcBLogProject.Entities.csproj", "{1D86191A-130A-409C-9B1C-C58AF0FD1C77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnionArcBLogProject.Model", "OnionArcBLogProject.Model\OnionArcBLogProject.Model.csproj", "{520B42B7-9BC4-466C-8BE7-BE55C867EC8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnionArcBLogProject.Model", "OnionArcBLogProject.Model\OnionArcBLogProject.Model.csproj", "{520B42B7-9BC4-466C-8BE7-BE55C867EC8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnionArcBLogProject.Service", "OnionArcBLogProject.BL\OnionArcBLogProject.Service.csproj", "{850C8114-6D40-41DF-B81E-8475D96D2784}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnionArcBLogProject.Service", "OnionArcBLogProject.BL\OnionArcBLogProject.Service.csproj", "{850C8114-6D40-41DF-B81E-8475D96D2784}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnionArcBLogProject.DAL", "OnionArcBLogProject.DAL\OnionArcBLogProject.DAL.csproj", "{2A03C50A-1724-4802-9D02-CE2D13C5EDFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnionArcBLogProject.DAL", "OnionArcBLogProject.DAL\OnionArcBLogProject.DAL.csproj", "{2A03C50A-1724-4802-9D02-CE2D13C5EDFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnionArcBLogProject.Core", "OnionArcBLogProject.Core\OnionArcBLogProject.Core.csproj", "{7869A70B-ED05-4B8D-85FD-E9EA42F2B06B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnionArcBLogProject.Core", "OnionArcBLogProject.Core\OnionArcBLogProject.Core.csproj", "{7869A70B-ED05-4B8D-85FD-E9EA42F2B06B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

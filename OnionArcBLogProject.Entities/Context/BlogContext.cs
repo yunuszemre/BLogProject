@@ -19,10 +19,13 @@ namespace OnionArcBLogProject.Entities.Context
         public DbSet<Comment> Comments { get; set; }
 
         public DbSet<Category> Categories { get; set; }
+        public BlogContext(DbContextOptions<BlogContext> options) : base(options)
+        {
 
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=DESKTOP-BODOH2U\\SA; Database=BlogDB; uid=sa; pwd=1234");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-BODOH2U\\SA; Database=BlogDB; uid=SA; pwd=1234");
             base.OnConfiguring(optionsBuilder);
         }
 

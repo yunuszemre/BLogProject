@@ -1,3 +1,8 @@
+﻿using Microsoft.EntityFrameworkCore;
+using OnionArcBLogProject.Core.Service;
+using OnionArcBLogProject.Entities.Context;
+using OnionArcBLogProject.Service.Base;
+
 namespace OnionArcBLogProject
 {
     public class Program
@@ -7,8 +12,9 @@ namespace OnionArcBLogProject
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
-
+            builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            builder.Services.AddScoped(typeof(ICoreService<>), typeof(BaseService<>));//Icore service ile base service arasında bağlantı
+            builder.Services.AddDbContext<BlogContext>(options => options.UseSqlServer("Server=DESKTOP-BODOH2U\\SA; Database=BlogDB; uid=SA; pwd=1234"));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

@@ -13,14 +13,16 @@ using OnionArcBLogProject.Entities.Context;
 namespace OnionArcBLogProject.Service.Base
 {
     using OnionArcBLogProject.Core.Entity.Enum;
+    using OnionArcBLogProject.Entities.Entities;
+
     public class BaseService<T> : ICoreService<T> where T : CoreEntity
     {
         private readonly BlogContext _context;
         public BaseService(BlogContext blogContext)
         {
-            _context= blogContext;
+            _context = blogContext;
         }
-        
+
 
         public bool Add(T item)
         {
@@ -40,25 +42,25 @@ namespace OnionArcBLogProject.Service.Base
 
         }
 
-    public bool Add(List<T> items)
-    {
-        try
+        public bool Add(List<T> items)
         {
-            using (TransactionScope ts = new TransactionScope())
+            try
             {
-                _context.Set<T>().AddRange(items);
-                return true;
+                using (TransactionScope ts = new TransactionScope())
+                {
+                    _context.Set<T>().AddRange(items);
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return false;
             }
         }
-        catch (Exception ex)
-        {
-
-            return false;
-        } 
-    }
 
         public bool Any(Expression<Func<T, bool>> exp) => _context.Set<T>().Any(exp);
-        
+
 
         public bool DeleteAll(Expression<Func<T, bool>> exp)
         {
@@ -66,6 +68,15 @@ namespace OnionArcBLogProject.Service.Base
         }
 
         public List<T> GetActive() => _context.Set<T>().Where(x => x.Status == Core.Entity.Enum.Status.Active).ToList();
+        public IQueryable<T> GetActive(params Expression<Func<T, object>>[] includes)
+        {
+            var query = _context.Set<T>().Where(x => x.Status == Core.Entity.Enum.Status.Active);
+            if (includes != null)
+            {
+                query = includes.Aggregate(query, (current, include) => current.Include(include));
+            }
+            return query;
+        }
 
         public List<T> GetAll() => _context.Set<T>().ToList();
 
@@ -74,7 +85,7 @@ namespace OnionArcBLogProject.Service.Base
 
 
         public T GetById(int id) => _context.Set<T>().Find(id);
-        
+
 
         public T GetById(Guid id)
         {
@@ -82,11 +93,11 @@ namespace OnionArcBLogProject.Service.Base
         }
 
         public List<T> GetDefault(Expression<Func<T, bool>> exp) => _context.Set<T>().Where(exp).ToList();
-        
+
 
         public bool Remove(T item)
         {
-           item.Status = Core.Entity.Enum.Status.Deleted; return Update(item);
+            item.Status = Core.Entity.Enum.Status.Deleted; return Update(item);
         }
 
         public bool Remove(Guid id)
@@ -121,11 +132,11 @@ namespace OnionArcBLogProject.Service.Base
                         item.Status = Status.Deleted;
                         bool operationResult = Update(item);
                         if (operationResult) count += 1;
-                       
+
                     }
 
                     if (collection.Count == count) ts.Complete();
-                    else return false;                   
+                    else return false;
                 }
                 return true;
             }
@@ -158,11 +169,13 @@ namespace OnionArcBLogProject.Service.Base
         {
             T item = GetById(id);
             item.Status = Status.Active;
+
             return Update(item);
         }
         public void DetachedEntity(T item)
         {
             _context.Entry<T>(item).State = EntityState.Detached; // Bir entry tkip etmeyi bırakmak için kulllanılır
         }
+
     }
 }

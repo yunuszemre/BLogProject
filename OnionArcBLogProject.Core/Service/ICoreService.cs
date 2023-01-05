@@ -31,6 +31,7 @@ namespace OnionArcBLogProject.Core.Service
         T GetByDefault(Expression<Func<T, bool>> exp);
 
         List<T> GetActive();
+        IQueryable<T> GetActive(params Expression<Func<T, object>>[] include);
 
         List<T> GetDefault(Expression<Func<T, bool>> exp);
 
