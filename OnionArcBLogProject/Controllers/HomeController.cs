@@ -15,13 +15,15 @@ namespace OnionArcBLogProject.Controllers
         private readonly ICoreService<Category> _catService;
         private readonly ICoreService<Post> _postService;
         private readonly ICoreService<User> _userService;
+        private readonly ICoreService<Comment> _commentService;
 
-        public HomeController(ILogger<HomeController> logger, ICoreService<Category> catService, ICoreService<Post> PostService, ICoreService<User> UserService)
+        public HomeController(ILogger<HomeController> logger, ICoreService<Category> catService, ICoreService<Post> PostService, ICoreService<User> UserService, ICoreService<Comment> commentService)
         {
             _logger = logger;
             _catService = catService;
             _postService = PostService;
             _userService = UserService;
+            _commentService = commentService;
         }
 
         public IActionResult Index()
@@ -34,6 +36,7 @@ namespace OnionArcBLogProject.Controllers
             return View(_postService.GetDefault(x => x.CategroyId == id));
         }
 
+        [HttpGet("Post/{id?}")]
         public IActionResult Post(Guid id)
         {
             Post readedPost = _postService.GetById(id);
@@ -44,6 +47,7 @@ namespace OnionArcBLogProject.Controllers
             vm.Category = _catService.GetById(readedPost.CategroyId);
             vm.Post = readedPost;
             vm.User = _userService.GetById(readedPost.UserId);
+            vm.Comments= _commentService.GetAll().ToList();
 
 
             return View(vm);

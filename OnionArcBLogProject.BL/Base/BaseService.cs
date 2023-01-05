@@ -87,10 +87,8 @@ namespace OnionArcBLogProject.Service.Base
         public T GetById(int id) => _context.Set<T>().Find(id);
 
 
-        public T GetById(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+        public T GetById(Guid id) => _context.Set<T>().Find(id);
+
 
         public List<T> GetDefault(Expression<Func<T, bool>> exp) => _context.Set<T>().Where(exp).ToList();
 
