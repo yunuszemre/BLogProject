@@ -1,14 +1,13 @@
 ﻿@model List<Post>
 @foreach (Post item in Model)
 {
-    
     <article class="col-12 col-md-6 tm-post">
         <hr class="tm-hr-primary">
         <a asp-action="Post" asp-controller="Home" asp-route-id="@item.Id" class="effect-lily tm-post-link tm-pt-60">
             <div class="tm-post-link-inner">
-                <img src="@item.ImagePath" alt="Image" class="img-fluid">
+                <img src="@item.ImagePath" class="img-fluid">
             </div>
-            <span class="position-absolute tm-new-badge">New</span>
+            <span class="position-absolute tm-new-badge">Yeni</span>
             <h2 class="tm-pt-30 tm-color-primary tm-post-title"><a asp-action="Post" asp-controller="Home" asp-route-id="@item.Id">@item.Title</a></h2>
         </a>
         <p class="tm-pt-30">
