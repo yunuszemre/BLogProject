@@ -8,6 +8,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.12">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.11" />
   </ItemGroup>
 
@@ -15,6 +19,15 @@
     <ProjectReference Include="..\OnionArcBLogProject.BL\OnionArcBLogProject.Service.csproj" />
     <ProjectReference Include="..\OnionArcBLogProject.Core\OnionArcBLogProject.Core.csproj" />
     <ProjectReference Include="..\OnionArcBLogProject.Entities\OnionArcBLogProject.Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Guest\Controllers\" />
+    <Folder Include="Areas\Guest\Data\" />
+    <Folder Include="Areas\Guest\Models\" />
+    <Folder Include="Areas\Guest\Views\" />
   </ItemGroup>
 
 </Project>

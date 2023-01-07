@@ -3,14 +3,14 @@
 {
     <article class="col-12 col-md-6 tm-post">
         <hr class="tm-hr-primary">
-        <a asp-action="Post" asp-controller="Home" asp-route-id="@item.Id" class="effect-lily tm-post-link tm-pt-60">
+        <a asp-action="Post" asp-controller="Home" asp-route-id="@item.Id" class="effect-lily tm-post-link tm-pt-20">
             <div class="tm-post-link-inner">
-                <img src="@item.ImagePath" class="img-fluid">
+                <img src="~/@item.ImagePath" class="img-fluid">
             </div>
             <span class="position-absolute tm-new-badge">Yeni</span>
-            <h2 class="tm-pt-30 tm-color-primary tm-post-title"><a asp-action="Post" asp-controller="Home" asp-route-id="@item.Id">@item.Title</a></h2>
+            <h2 class="tm-pt-20 tm-color-primary tm-post-title"><a asp-action="Post" asp-controller="Home" asp-route-id="@item.Id">@item.Title</a></h2>
         </a>
-        <p class="tm-pt-30">
+        <p class="tm-pt-10">
             @{
                 if (item.PostDetail.Length < 100)
                 {
@@ -24,26 +24,15 @@
             }
 
         </p>
-        <div class="d-flex justify-content-between tm-pt-45">
+        <div class="d-flex justify-content-between tm-pt-20">
             <span class="tm-color-primary">@item.Tags</span>
             <span class="tm-color-primary">@item.CreatedDate.Value.ToShortDateString()</span>
         </div>
         <hr>
-        <div class="d-flex justify-content-between tm-pt-45">
-            <span style="display: block">@item.Comments.Count adet yorum</span>
-            <span style="display: block">@item.User.UserName</span>
-            <span style="display: block">@item.ViewCount kez okundu</span>
-        </div>
-        <div class="d-flex justify-content-between">
-            @{
-                foreach (var comment in item.Comments)
-                {
-                    <span>
-                        @comment.CommentText
-                    </span>
-                    <br />
-                }
-            }
+        <div class="d-flex justify-content-between tm-pt-20">
+            <span style="display: block"> <i class="fas fa-comment"></i> @item.Comments.Count adet yorum</span>
+            <span style="display: block"><i class="fas fa-user></i>@item.User.FirstName @item.User.LastName</span>
+        <span style="display: block"><i class="fas fa-eye"></i> @item.ViewCount kez okundu</span>
         </div>
 
     </article>

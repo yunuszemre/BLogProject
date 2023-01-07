@@ -23,7 +23,11 @@ namespace OnionArcBLogProject.WebUI.Controllers
         public IActionResult ShowPosts(Guid id)
         {
 
-            return View(_postService.GetActive(t0 => t0.User, t2 => t2.Comments).Where(t0 => t0.CategroyId == id ).ToList());
+            return View(_postService.GetActive(t0 => t0.User, t2 => t2.Comments).Where(t0 => t0.CategroyId == id).ToList());
+        }
+        public IActionResult SearchResult(string q)
+        {
+              return View(_postService.GetDefault(x=>x.Title.Contains(q)));
         }
     }
 }

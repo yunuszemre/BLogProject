@@ -11,29 +11,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet"> <!-- https://fonts.google.com/ -->
     <link href="~/FrontTemplate/css/bootstrap.min.css" rel="stylesheet">
     <link href="~/FrontTemplate/css/templatemo-xtra-blog.css" rel="stylesheet">
+    <style>
+        
+        header{
+            
+            justify-content: center;
+        }
+        body{
+            justify-content: space-around;
+        }
+        .tm-header{
+            max-width: 300px
+        }
+        .tm-header-wrapper{
+            max-width:300px;
+        }
+    </style>
 </head>
 <body>
-    @*<header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">OnionArcBLogProject</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        </header>*@
     <header class="tm-header" id="tm-header">
         <div class="tm-header-wrapper">
             <button class="navbar-toggler" type="button" aria-label="Toggle navigation">
@@ -45,6 +40,12 @@
             </div>
             <nav class="tm-nav" id="tm-nav">
                 <ul>
+                    <li class="tm-nav-item active">
+                        <a asp-action="Index" asp-controller="Admin" asp-area="Admin" class="tm-nav-link">
+                            <i class="fas fa-home"></i>
+                            Admin
+                        </a>
+                    </li>
                     <li class="tm-nav-item active">
                         <a asp-action="Index" asp-controller="Home" asp-area="" class="tm-nav-link">
                             <i class="fas fa-home"></i>
@@ -152,7 +153,7 @@
     </div>
     <div class="container">
         <main role="main" class="pb-3">
-            @*@RenderBody()*@
+            
         </main>
     </div>
 
@@ -165,22 +166,4 @@
 </body>
 
 </html>
-@*<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BilgeAdam Blog</title>
-    <link rel="stylesheet" href="fontawesome/css/all.min.css"> <!-- https://fontawesome.com/ -->
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet"> <!-- https://fonts.google.com/ -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/templatemo-xtra-blog.css" rel="stylesheet">
-    <!--
 
-    TemplateMo 553 BilgeAdam Blog
-
-    https://templatemo.com/tm-553-xtra-blog
-
-    -->
-</head>
-
-</html*@

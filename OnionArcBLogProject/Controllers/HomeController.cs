@@ -47,10 +47,19 @@ namespace OnionArcBLogProject.Controllers
             vm.Category = _catService.GetById(readedPost.CategroyId);
             vm.Post = readedPost;
             vm.User = _userService.GetById(readedPost.UserId);
-            vm.Comments= _commentService.GetAll().ToList();
-
+            vm.Comments = _commentService.GetAll().ToList();
+            vm.Categories= _catService.GetActive().ToList();
 
             return View(vm);
+        }
+        public List<Post> GetRandomPosts()
+        {
+            List<Post> posts = new List<Post>();
+            
+            
+           posts = _postService.GetActive().ToList();
+           
+            return posts;
         }
     }
 }
