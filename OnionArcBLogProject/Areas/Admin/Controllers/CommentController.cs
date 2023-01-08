@@ -56,8 +56,9 @@ namespace OnionArcBLogProject.WebUI.Areas.Admin.Controllers
             addedComment.CommentText= commentMessage;
             if (ModelState.IsValid)
             {
-                bool result = _commentService.Add(addedComment);
                 addedComment.Status = Core.Entity.Enum.Status.None;
+                bool result = _commentService.Add(addedComment);
+                
                 if (result)
                 {
 

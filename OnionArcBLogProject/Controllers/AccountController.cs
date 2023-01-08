@@ -9,6 +9,7 @@ namespace OnionArcBLogProject.WebUI.Controllers
 {
     public class AccountController : Controller
     {
+        
         private readonly ICoreService<User> _userService;
         public AccountController(ICoreService<User> userService)
         {
@@ -26,9 +27,13 @@ namespace OnionArcBLogProject.WebUI.Controllers
             {
                 User loggedUser = _userService.GetByDefault(x => x.UserEmail == user.UserEmail && x.UserPassword == user.UserPassword);
 
-                //jullanıcnın saklayacağınmız bilgilerii claim'ler olarak tutablilriz
+                if (loggedUser.Status == Core.Entity.Enum.Status.Active)
+                {
 
-                var claims = new List<Claim>()
+
+                    //jullanıcnın saklayacağınmız bilgilerii claim'ler olarak tutablilriz
+
+                    var claims = new List<Claim>()
                 {
                     new Claim("Id", loggedUser.Id.ToString()),
                     new Claim(ClaimTypes.Name, loggedUser.FirstName),
@@ -37,11 +42,12 @@ namespace OnionArcBLogProject.WebUI.Controllers
                     new Claim("ImageUrl", loggedUser.ImageUrl)
                 };
 
-                var userIdentity = new ClaimsIdentity(claims, "login");
-                ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
-                await HttpContext.SignInAsync(principal);
+                    var userIdentity = new ClaimsIdentity(claims, "login");
+                    ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
+                    await HttpContext.SignInAsync(principal);
 
-                return RedirectToAction("Index", "Admin", new { area = "Admin" });
+                    return RedirectToAction("Index", "Admin", new { area = "Admin" });
+                }
             }
             return View();
         }
@@ -52,12 +58,22 @@ namespace OnionArcBLogProject.WebUI.Controllers
             return RedirectToAction("Index", "Home", new { area = "" });
 
         }
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
         [HttpPost]
         public IActionResult Register(User user)
         {
             user.Title = "Kullanıcı";
-            user.Status = Core.Entity.Enum.Status.None;
-                if (ModelState.IsValid)
+            user.Status = Core.Entity.Enum.Status.Active;
+            user.Id= Guid.NewGuid();
+            user.CreatedDate= DateTime.Now;
+            user.ImageUrl = "Uploads/d91c0e95_492c_45a1_b5ef_64e597c71e48.png";
+
+
+            if (ModelState.IsValid)
             {
                 bool result = _userService.Add(user);
                 user.Status = Core.Entity.Enum.Status.None;
@@ -79,7 +95,7 @@ namespace OnionArcBLogProject.WebUI.Controllers
                 TempData["MessageError"] = "Kayıt işleminde bir hata meydana geldi lütfen bilgileri kontrol ediniz";
             }
 
-            return View();
+            return RedirectToAction("Index", "Home", new {area=""});
         }
     }
 }

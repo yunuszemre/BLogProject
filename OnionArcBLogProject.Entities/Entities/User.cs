@@ -20,17 +20,17 @@ namespace OnionArcBLogProject.Entities.Entities
 
         public string UserPassword { get; set; }
 
-        public string? FirstName { get; set; }
+        public string FirstName { get; set; }
 
         public string LastName { get; set; }
 
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
 
         public DateTime? LastLogin { get; set; }
 
-        public string LastIpAdress { get; set; }
+        public string? LastIpAdress { get; set; }
 
         public virtual List<Comment> Comments { get; set; }
 
