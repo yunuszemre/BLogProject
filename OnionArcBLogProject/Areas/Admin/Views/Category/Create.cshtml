@@ -4,8 +4,15 @@
 }
 <form asp-action="Create" asp-area="Admin" asp-controller="Category" method="post">
 
-
+    <input type="hidden" value="" />
     <div class="offset-3  col-md-6">
+        @if (TempData["MessageError"] != null)
+        {
+       <div class="alert alert-danger" role="alert">
+                @TempData["MessageError"].ToString()
+        </div>
+        }
+       
         <div class="card">
             <div class="card-header">
                 <div class="card-title">Kategori Ekelme</div>
@@ -15,10 +22,11 @@
                     <label asp-for="@Model.CategoryName" for="largeInput">Kategori Adı</label>
                     <input asp-for="@Model.CategoryName" type="text" class="form-control form-control-lg" id="largeInput" placeholder="Large Input">
                 </div>
+               
                 <div class="form-group">
                     <label asp-for="@Model.CategoryDescription" for="largeInput">Kategori Açıklaması</label>
-                    <textarea asp-for="@Model.CategoryDescription" rows="5" type="text" class="form-control form-control" id="defaultInput" placeholder="Default Input"></textarea>
-                </div>
+                    <textarea asp-for="@Model.CategoryDescription" rows="6" type="text" class="form-control form-control" id="defaultInput" placeholder="Default Input"></textarea>
+                </div>                
             </div>
             <div class="card-action">
                 <button type="submit" class="btn btn-success">Kaydet</button>
@@ -28,5 +36,6 @@
     </div>
     </div>
 </form>
+
 
 

@@ -20,7 +20,7 @@ namespace OnionArcBLogProject.Entities.Entities
 
         public string UserPassword { get; set; }
 
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
         public string LastName { get; set; }
 

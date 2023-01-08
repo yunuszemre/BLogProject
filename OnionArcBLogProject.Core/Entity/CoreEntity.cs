@@ -22,17 +22,17 @@ namespace OnionArcBLogProject.Core.Entity
 
         public Status Status { get; set; }
 
-        public DateTime? CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; } = DateTime.Now;
 
-        public string CreatedComputerName { get; set; }
+        public string? CreatedComputerName { get; set; }
 
-        public string CreatedIp { get; set; }
+        public string? CreatedIp { get; set; }
 
-        public DateTime? ModifiedDate { get; set; }
+        public DateTime? ModifiedDate { get; set; } = DateTime.Now;
 
-        public string ModifiedComputerName { get; set; }
+        public string? ModifiedComputerName { get; set; }
 
-        public string ModifiedIp { get; set; }
+        public string? ModifiedIp { get; set; }
 
     }
 }

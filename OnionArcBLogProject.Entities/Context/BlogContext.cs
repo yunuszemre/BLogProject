@@ -53,6 +53,7 @@ namespace OnionArcBLogProject.Entities.Context
             foreach (var item in modifiedentities)
             {
                 CoreEntity entity = item.Entity as CoreEntity;
+                
                 if (entity != null)
                 {
                     switch (item.State)

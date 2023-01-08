@@ -40,13 +40,21 @@
             </div>
             <nav class="tm-nav" id="tm-nav">
                 <ul>
-                    <li class="tm-nav-item active">
-                        <a asp-action="Index" asp-controller="Admin" asp-area="Admin" class="tm-nav-link">
-                            <i class="fas fa-home"></i>
-                            Admin
-                        </a>
-                    </li>
-                    <li class="tm-nav-item active">
+                    @if(string.IsNullOrEmpty(User.Identity.Name)){
+                        <li class="tm-nav-item">
+                            <a asp-action="Login" asp-controller="Account" asp-area="" class="tm-nav-link">
+                                <i class="fas fa-home"></i>
+                                Giriş Yap
+                            </a>
+                        </li>
+                    }else{
+
+                        <i class="fas fa-"><a class asp-action="Logout" asp-controller="Account" asp-area="" class="tm-nav-link">Çıkış Yap</a></i>
+                            
+                        
+                    }
+                    
+                    <li class="tm-nav-item">
                         <a asp-action="Index" asp-controller="Home" asp-area="" class="tm-nav-link">
                             <i class="fas fa-home"></i>
                             Anasayfa

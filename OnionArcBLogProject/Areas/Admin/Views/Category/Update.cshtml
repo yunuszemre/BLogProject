@@ -1,0 +1,46 @@
+﻿@model Category
+@{
+    ViewData["Title"] = "Kategori Ekle";
+}
+<form asp-action="Update" asp-area="Admin" asp-controller="Category" method="post">
+
+
+    <div class="offset-3  col-md-6">
+        <input type="hidden" asp-for="Id"/>
+        @if (TempData["MessageError"] != null)
+        {
+           <div class="alert alert-danger" role="alert">
+                @TempData["MessageError"].ToString()
+            </div>
+        }
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Kategori Ekelme</div>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label asp-for="CategoryName" for="largeInput">Kategori Adı</label>
+                    <input asp-for="CategoryName" type="text" class="form-control form-control-lg" id="largeInput" placeholder="Large Input">
+                </div>
+                <div class="form-group">
+                    <label asp-for="CategoryDescription" for="largeInput">Kategori Açıklaması</label>
+                    <textarea asp-for="CategoryDescription" rows="5" type="text" class="form-control form-control" id="defaultInput" placeholder="Default Input"></textarea>
+                </div>
+            </div>
+            <select class="form-control form-control" id="defaultSelect">
+                @{
+                    
+                    
+                }
+            </select>
+            <div class="card-action">
+                <button type="submit" class="btn btn-success">Güncelle</button>
+                <button class="btn btn-danger">Cancel</button>
+            </div>
+        </div>
+    </div>
+    </div>
+</form>
+
+
+

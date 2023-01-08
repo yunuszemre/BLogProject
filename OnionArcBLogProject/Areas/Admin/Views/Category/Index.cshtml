@@ -17,12 +17,15 @@
                     <th scope="col">Kategori Adı</th>
                     <th scope="col">Açıklama</th>
                     <th scope="col">Durum</th>
+                    <th scope="col">Post Sayısı</th>
+                    <th scope="col">Eklenme Tarihi </th>
                     <th scope="col">İşlemler</th>
+                    
                 </tr>
             </thead>
             <tbody>
                 @{
-                    foreach (var item in Model)
+                    foreach (Category item in Model)
                     {
                         <tr>
                            
@@ -32,20 +35,24 @@
                                 @if(item.Status== Status.Active){
                                     <p class="text-success">Aktif</p>
                                 }else if(item.Status == Status.None){
-                                    <p class="text-danger">Pasif</p>
+                                    <p class="text-danger">Onay Bekliyor</p>
                                 }
                                 else if(item.Status == Status.Updated){
-                                    <p class="text-warning">Güncellendi</p>
+                                    <p class="text-warning">Güncellendi, onay bekliyor</p>
                                 }
                                 else if(item.Status == Status.Deleted){
                                     <p class="text-warning">Silindi</p>}
                             </td>
+                            <td>@item.Posts.Count</td>
                             <td>
-                                @if (item.Status == Status.None)
+                                @item.CreatedDate.Value.ToShortDateString()
+                            </td>
+                            <td>
+                                @if (item.Status == Status.None || item.Status == Status.Deleted || item.Status == Status.Updated)
                                 {
                                     <a asp-action="Activate" asp-controller="Category" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-info"><i class="la la-check"></i></a>
                                 }
-                                <a asp-action="Create" asp-controller="Category" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-warning"><i class="la la-edit"></i></a>
+                                <a asp-action="Update" asp-controller="Category" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-warning"><i class="la la-edit"></i></a>
                                 <a asp-action="Delete" asp-controller="Category" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-danger"><i class="la la-trash"></i></a>
                             </td>
                         </tr>

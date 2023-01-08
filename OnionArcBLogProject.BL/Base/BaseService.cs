@@ -26,6 +26,7 @@ namespace OnionArcBLogProject.Service.Base
 
         public bool Add(T item)
         {
+            
             try
             {
                 using (TransactionScope ts = new TransactionScope())

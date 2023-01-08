@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OnionArcBLogProject.Controllers;
 using OnionArcBLogProject.Core.Service;
 using OnionArcBLogProject.Entities.Entities;
 
 namespace OnionArcBLogProject.WebUI.Areas.Admin.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         

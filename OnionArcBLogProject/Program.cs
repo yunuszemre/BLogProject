@@ -3,6 +3,8 @@ using OnionArcBLogProject.Core.Service;
 using OnionArcBLogProject.Entities.Context;
 using OnionArcBLogProject.Service.Base;
 
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 namespace OnionArcBLogProject
 {
     public class Program
@@ -15,6 +17,12 @@ namespace OnionArcBLogProject
             builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
             builder.Services.AddScoped(typeof(ICoreService<>), typeof(BaseService<>));//Icore service ile base service arasında bağlantı
             builder.Services.AddDbContext<BlogContext>(options => options.UseSqlServer("Server=DESKTOP-BODOH2U\\SA; Database=BlogDB; uid=SA; pwd=1234"));
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+                options =>
+                {
+                    options.LoginPath = "/Account/login"; //Yetki isteyen sayfalara girmek istediğiizde bizi yönlendireceği sayfayı belirle
+
+                });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -29,7 +37,7 @@ namespace OnionArcBLogProject
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
