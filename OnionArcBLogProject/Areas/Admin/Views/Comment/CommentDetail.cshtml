@@ -1,0 +1,5 @@
+﻿@model Comment
+
+<label>@Model.CommentText</label>
+<label>@Model.CreatedDate.Value.ToShortDateString()</label>
+<label>@ViewBag.Comment.User.UserName</label>

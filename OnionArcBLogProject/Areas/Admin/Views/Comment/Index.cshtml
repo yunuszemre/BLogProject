@@ -1,0 +1,84 @@
+﻿@model List<Comment>
+@{
+    ViewData["Title"] = "Yorum Listesi";
+}
+<div class="card">
+    <div class="card-header">
+        <div class="card-title">Yorum Listesi</div>
+    </div>
+    <div class="card-body">
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Makale Başlığı</th>
+                    <th scope="col">Yorum</th>
+                    <th scope="col">Ekleyen</th>
+                    <th scope="col">Durumu</th>
+                    <th scope="col">Eklenme Tarihi </th>
+                    <th scope="col">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (Comment item in Model)
+                    {
+                        <tr>
+                            <td>@item.Post.Title</td>
+
+                            @if (item.CommentText.Length < 50)
+                            {
+                                <td>
+                                    @item.CommentText
+
+                                </td>
+                            }
+                            else
+                            {
+                                <td>@item.CommentText.Substring(0,50)...</td>
+                            }
+
+                            <td>@item.User.FirstName</td>
+                            <td>
+                                @if (item.Status == Status.Active)
+                                {
+                                    <p class="text-success">Aktif</p>
+                                }
+                                else if (item.Status == Status.None)
+                                {
+                                    <p class="text-danger">Onay Bekliyor</p>
+                                }
+                                else if (item.Status == Status.Updated)
+                                {
+                                    <p class="text-warning">Güncellendi, onay bekliyor</p>
+                                }
+                                else if (item.Status == Status.Deleted)
+                                {
+                                    <p class="text-warning">Silindi</p>
+                                }
+                            </td>
+                            <td>
+                                @item.CreatedDate.Value.ToShortDateString()
+                            </td>
+                            <td>
+                                @if (item.Status == Status.None || item.Status == Status.Deleted || item.Status == Status.Updated)
+                                {
+                                    <a asp-action="Activate" asp-controller="Comment" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-info"><i class="la la-check"></i></a>
+                                }
+                                else
+                                {
+                                    <a asp-action="Delete" asp-controller="Comment" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-danger"><i class="la la-trash"></i></a>
+
+                                }
+
+                                <a asp-action="CommentDetail" asp-controller="Comment" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-warning"><i class="la la-comment"></i></a>
+                            </td>
+                        </tr>
+                    
+                    }
+
+                }
+
+
+            </tbody>
+        </table>

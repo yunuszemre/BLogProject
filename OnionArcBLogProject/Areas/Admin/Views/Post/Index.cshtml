@@ -54,7 +54,7 @@
                                     <td>
                                 @if (item.Status == Status.None || item.Status == Status.Deleted || item.Status == Status.Updated)
                                 {
-                                                <a asp-action="Activate" asp-controller="Post" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-info"><i class="la la-check"></i></a>
+                                        <a asp-action="Activate" asp-controller="Post" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-info"><i class="la la-check"></i></a>
                                 }
                                         <a asp-action="Update" asp-controller="Post" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-warning"><i class="la la-edit"></i></a>
                                         <a asp-action="Delete" asp-controller="Post" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-danger"><i class="la la-trash"></i></a>

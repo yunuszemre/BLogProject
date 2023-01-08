@@ -96,7 +96,7 @@ namespace OnionArcBLogProject.WebUI.Areas.Admin.Controllers
         }
         public IActionResult Delete(Guid Id)
         {
-            _categoryService.Remove(Id);
+            _categoryService.Remove(_categoryService.GetById(Id));
             return RedirectToAction("Index");
         }
 

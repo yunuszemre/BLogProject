@@ -36,6 +36,7 @@ namespace OnionArcBLogProject.Core.Service
         List<T> GetDefault(Expression<Func<T, bool>> exp);
 
         List<T> GetAll();
+        IQueryable<T> GetAll(params Expression<Func<T, object>>[] include);
 
         bool Activate(Guid id);
 

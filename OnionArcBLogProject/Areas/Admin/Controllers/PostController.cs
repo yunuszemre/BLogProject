@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OnionArcBLogProject.Core.Service;
 using OnionArcBLogProject.Entities.Entities;
+using OnionArcBLogProject.WebUI.Areas.Admin.Models;
 
 namespace OnionArcBLogProject.WebUI.Areas.Admin.Controllers
 {
@@ -12,10 +13,13 @@ namespace OnionArcBLogProject.WebUI.Areas.Admin.Controllers
     {
         private readonly ICoreService<Post> _postService;
         private readonly ICoreService<Category> _categoryService;
-        public PostController(ICoreService<Post> postService, ICoreService<Category> categoryService)
+        private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _environment;
+
+        public PostController(ICoreService<Post> postService, ICoreService<Category> categoryService, Microsoft.AspNetCore.Hosting.IHostingEnvironment environment)
         {
             _postService = postService;
             _categoryService = categoryService;
+            this._environment = environment;
         }
 
         public IActionResult Index()
@@ -32,8 +36,24 @@ namespace OnionArcBLogProject.WebUI.Areas.Admin.Controllers
         }
         [HttpPost]
         //Sayfadan gelenGelen veriyi db ye ekleyecek
-        public IActionResult Create(Post post)
+        public IActionResult Create(Post post, List<IFormFile> files)
         {
+            ViewBag.Categories = new SelectList(_categoryService.GetActive(), "Id", "CategoryName");
+            post.UserId = Guid.Parse(User.Claims.FirstOrDefault(x=>x.Type == "Id").Value);
+
+            //alınan resimleri resi yüklemek için olş methoda gönderme
+            bool imgRes;
+            string imgPath = Upload.ImageUpload(files,_environment,out imgRes);
+
+            if (imgRes)
+            {
+                post.ImagePath = imgPath;
+            }
+            else
+            {
+                ViewBag.MessageError = $"Resim yükleme işleminde bir hata oluştu";
+                return View();
+            }
 
             if (ModelState.IsValid)
             {
@@ -64,6 +84,7 @@ namespace OnionArcBLogProject.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Update(Post post)
         {
+            
             Post updatedPost = null;
             if (ModelState.IsValid)
             {
@@ -96,6 +117,7 @@ namespace OnionArcBLogProject.WebUI.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Update(Guid id)
         {
+            ViewBag.Categories = new SelectList(_categoryService.GetActive(), "Id", "CategoryName");
             return View(_postService.GetById(id));
         }
         public IActionResult Activate(Guid Id)
@@ -105,7 +127,7 @@ namespace OnionArcBLogProject.WebUI.Areas.Admin.Controllers
         }
         public IActionResult Delete(Guid Id)
         {
-            _postService.Remove(Id);
+            _postService.Remove(_postService.GetById(Id));
             return RedirectToAction("Index");
         }
 

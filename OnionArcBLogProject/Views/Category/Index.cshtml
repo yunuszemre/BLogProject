@@ -22,7 +22,15 @@
                 @category.CategoryDescription
             </p>
             <div class="d-flex justify-content-between tm-pt-45">
-                <span class="tm-color-primary">Bu kategoride @category.Posts.Count adet post bulunuyor</span>
+                    @{int count=0;}
+                @foreach (var item in category.Posts)
+                {
+                    if (item.Status == OnionArcBLogProject.Core.Entity.Enum.Status.Active)
+                    {
+                        count += 1;
+                    }
+                }
+                <span class="tm-color-primary">Bu kategoride @count adet post bulunuyor</span>
                 <span class="tm-color-primary">Bu kategori @category.CreatedDate.Value.ToShortDateString() tarihinde oluşturuldu</span>
             </div>
             <hr>

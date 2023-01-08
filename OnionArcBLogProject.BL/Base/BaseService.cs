@@ -109,6 +109,7 @@ namespace OnionArcBLogProject.Service.Base
                     item.Status = Core.Entity.Enum.Status.Deleted;
                     ts.Complete();
                     return Update(item);
+                    
                 }
             }
             catch (Exception ex)
@@ -176,5 +177,14 @@ namespace OnionArcBLogProject.Service.Base
             _context.Entry<T>(item).State = EntityState.Detached; // Bir entry tkip etmeyi bırakmak için kulllanılır
         }
 
+        public IQueryable<T> GetAll(params Expression<Func<T, object>>[] includes)
+        {
+            var query = _context.Set<T>().AsQueryable();
+            if (includes != null)
+            {
+                query = includes.Aggregate(query, (current, include) => current.Include(include));
+            }
+            return query;
+        }
     }
 }
