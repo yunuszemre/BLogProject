@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OnionArcBLogProject.Core.Service;
 using OnionArcBLogProject.Entities.Entities;
+using OnionArcBLogProject.WebUI.Models.ViewModels;
 using System.Security.Claims;
 
 namespace OnionArcBLogProject.WebUI.Controllers
@@ -50,6 +51,35 @@ namespace OnionArcBLogProject.WebUI.Controllers
 
             return RedirectToAction("Index", "Home", new { area = "" });
 
+        }
+        [HttpPost]
+        public IActionResult Register(User user)
+        {
+            user.Title = "Kullanıcı";
+            user.Status = Core.Entity.Enum.Status.None;
+                if (ModelState.IsValid)
+            {
+                bool result = _userService.Add(user);
+                user.Status = Core.Entity.Enum.Status.None;
+                if (result)
+                {
+
+                    _userService.Save();
+                    TempData["MessageSuccess"] = "Kayıt işlemi başarılı";
+                    return RedirectToAction("Index");
+
+                }
+                else
+                {
+                    TempData["MessageError"] = "Kayıt işleminde bir hata meydana geldi lütfen bilgileri kontrol ediniz";
+                }
+            }
+            else
+            {
+                TempData["MessageError"] = "Kayıt işleminde bir hata meydana geldi lütfen bilgileri kontrol ediniz";
+            }
+
+            return View();
         }
     }
 }

@@ -30,29 +30,34 @@
                     <h2 class="tm-color-primary tm-post-title">Yorumlar</h2>
                     @foreach (var comment in Model.Comments)
                     {
-                        <hr class="tm-hr-primary tm-mb-45">
-                        <div class="tm-comment tm-mb-15">
-                            <figure class="tm-comment-figure">
-                                <img src="~/FrontTemplate/img/comment-1.jpg" alt="Image" class="mb-2 rounded-circle img-thumbnail">
-                                <figcaption class="tm-color-primary text-center"></figcaption>
-                            </figure>
-                            <div>
-                                <p>
-                                    @comment.CommentText
-                                </p>
-                                <div class="d-flex justify-content-between">
-                                    <a href="#" class="tm-color-primary">REPLY</a>
-                                    <span class="tm-color-primary">@comment.User.FirstName, @comment.CreatedDate.Value.ToShortDateString()</span>
+                        if (comment.Status == OnionArcBLogProject.Core.Entity.Enum.Status.Active)
+                        {
+
+
+                            <hr class="tm-hr-primary tm-mb-45">
+                            <div class="tm-comment tm-mb-15">
+                                <figure class="tm-comment-figure">
+                                    <img src="~/FrontTemplate/img/comment-1.jpg" alt="Image" class="mb-2 rounded-circle img-thumbnail">
+                                    <figcaption class="tm-color-primary text-center"></figcaption>
+                                </figure>
+                                <div>
+                                    <p>
+                                        @comment.CommentText
+                                    </p>
+                                    <div class="d-flex justify-content-between">
+                                        <a href="#" class="tm-color-primary">REPLY</a>
+                                        <span class="tm-color-primary">@comment.User.FirstName, @comment.CreatedDate.Value.ToShortDateString()</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-
+                        }
                     }
                     <form asp-action="Create" asp-controller="Comment" asp-area="Admin" method="post" class="mb-5 tm-comment-form">
+                        <input type="hidden" name="userId" value="@Context.User.FindFirst("Id").Value.ToString()"/>
+                        <input type="hidden" name="postId" value="@Model.Post.Id" />
                         <h2 class="tm-color-primary tm-post-title mb-4">Sizin yorumunuz</h2>
                         <div class="mb-4">
-                            <input class="form-control" type="text" disabled placeholder="@Context.User.FindFirst(ClaimTypes.Name) @Context.User.FindFirst(ClaimTypes.Surname)">
+                            <input class="form-control" type="text" disabled placeholder="@Context.User.FindFirst(ClaimTypes.Name).Value @Context.User.FindFirst(ClaimTypes.Surname).Value">
                         </div>
                         <div class="mb-4">
                             <textarea class="form-control" name="commentMessage" rows="6" placeholder="Yorumunuzu ekleyin"></textarea>
@@ -61,7 +66,6 @@
                             <button type="submit" class="tm-btn tm-btn-primary tm-btn-small">Gönder</button>
                         </div>
                     </form>
-
                 }
             </div>
         </div>

@@ -46,5 +46,39 @@ namespace OnionArcBLogProject.WebUI.Areas.Admin.Controllers
             _commentService.Activate(Id);
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        //Sayfadan gelenGelen veriyi db ye ekleyecek
+        public IActionResult Create(Guid userId, Guid postId, string commentMessage)
+        {
+            Comment addedComment = new Comment();
+            addedComment.UserId = userId;
+            addedComment.PostId = postId;
+            addedComment.CommentText= commentMessage;
+            if (ModelState.IsValid)
+            {
+                bool result = _commentService.Add(addedComment);
+                addedComment.Status = Core.Entity.Enum.Status.None;
+                if (result)
+                {
+
+                    _commentService.Save();
+                    TempData["MessageSuccess"] = "Kayıt işlemi başarılı";
+                    RedirectToAction("Post", "Home", new { area = "", Id = postId });
+
+                }
+                else
+                {
+                    TempData["MessageError"] = "Kayıt işleminde bir hata meydana geldi lütfen bilgileri kontrol ediniz";
+                }
+            }
+            else
+            {
+                TempData["MessageError"] = "Kayıt işleminde bir hata meydana geldi lütfen bilgileri kontrol ediniz";
+            }
+
+
+
+            return RedirectToAction("Post", "Home", new {area="", Id = postId});
+        }
     }
 }
