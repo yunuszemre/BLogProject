@@ -25,7 +25,7 @@ namespace OnionArcBLogProject.Entities.Context
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=DESKTOP-BODOH2U\\SA; Database=BlogDB; uid=SA; pwd=1234");
+            optionsBuilder.UseSqlServer("Server=tcp:blogdata.database.windows.net,1433;Initial Catalog=BlogDB;Persist Security Info=False;User ID=yunus;Password=Asdf_1234;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             base.OnConfiguring(optionsBuilder);
         }
 

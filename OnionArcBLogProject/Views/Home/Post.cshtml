@@ -53,18 +53,27 @@
                         }
                     }
                     <form asp-action="Create" asp-controller="Comment" asp-area="Admin" method="post" class="mb-5 tm-comment-form">
-                        <input type="hidden" name="userId" value="@Context.User.FindFirst("Id").Value.ToString()"/>
-                        <input type="hidden" name="postId" value="@Model.Post.Id" />
-                        <h2 class="tm-color-primary tm-post-title mb-4">Sizin yorumunuz</h2>
-                        <div class="mb-4">
-                            <input class="form-control" type="text" disabled placeholder="@Context.User.FindFirst(ClaimTypes.Name).Value @Context.User.FindFirst(ClaimTypes.Surname).Value">
-                        </div>
-                        <div class="mb-4">
-                            <textarea class="form-control" name="commentMessage" rows="6" placeholder="Yorumunuzu ekleyin"></textarea>
-                        </div>
-                        <div class="text-right">
-                            <button type="submit" class="tm-btn tm-btn-primary tm-btn-small">Gönder</button>
-                        </div>
+                        @if (@Context.User.FindFirst("Id") != null)
+                        {
+
+
+                            <input type="hidden" name="userId" value="@Context.User.FindFirst("Id").Value.ToString()"/>
+                            <input type="hidden" name="postId" value="@Model.Post.Id" />
+                            <h2 class="tm-color-primary tm-post-title mb-4">Sizin yorumunuz</h2>
+                            <div class="mb-4">
+                                <input class="form-control" type="text" disabled placeholder="@Context.User.FindFirst(ClaimTypes.Name).Value @Context.User.FindFirst(ClaimTypes.Surname).Value">
+                            </div>
+                            <div class="mb-4">
+                                <textarea class="form-control" name="commentMessage" rows="6" placeholder="Yorumunuzu ekleyin"></textarea>
+                            </div>
+                            <div class="text-right">
+                                <button type="submit" class="tm-btn tm-btn-primary tm-btn-small">Gönder</button>
+                            </div>
+                        }
+                        else
+                        {
+                            
+                        }
                     </form>
                 }
             </div>

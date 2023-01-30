@@ -7,6 +7,7 @@ using OnionArcBLogProject.WebUI.Areas.Admin.Models;
 
 namespace OnionArcBLogProject.WebUI.Areas.Admin.Controllers
 {
+    using X.PagedList;
     [Authorize]
     [Area("Admin")]
     public class PostController : Controller
@@ -22,9 +23,9 @@ namespace OnionArcBLogProject.WebUI.Areas.Admin.Controllers
             this._environment = environment;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
-            var posts = _postService.GetAll().ToList();
+            var posts = _postService.GetAll().ToPagedList(page, 2);
             return View(posts);
         }
         [HttpGet]

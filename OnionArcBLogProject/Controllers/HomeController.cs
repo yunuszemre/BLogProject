@@ -6,6 +6,7 @@ using OnionArcBLogProject.Entities.Entities;
 using OnionArcBLogProject.Models;
 using OnionArcBLogProject.WebUI.Models.ViewModels;
 using System.Diagnostics;
+using X.PagedList;
 
 namespace OnionArcBLogProject.Controllers
 {

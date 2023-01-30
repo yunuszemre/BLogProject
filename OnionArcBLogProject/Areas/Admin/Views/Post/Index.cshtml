@@ -1,4 +1,6 @@
-﻿@model List<Post>
+﻿@model IPagedList<Post>
+@using X.PagedList
+@using X.PagedList.Mvc.Core
 @{
     ViewData["Title"] = "Makale Listesi";
 }
@@ -66,3 +68,7 @@
 
             </tbody>
         </table>
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new {page}))
+        </div>
+    </div>
+</div>

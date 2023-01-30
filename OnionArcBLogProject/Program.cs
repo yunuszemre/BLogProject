@@ -16,7 +16,7 @@ namespace OnionArcBLogProject
             // Add services to the container.
             builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
             builder.Services.AddScoped(typeof(ICoreService<>), typeof(BaseService<>));//Icore service ile base service arasında bağlantı
-            builder.Services.AddDbContext<BlogContext>(options => options.UseSqlServer("Server=DESKTOP-BODOH2U\\SA; Database=BlogDB; uid=SA; pwd=1234"));
+            builder.Services.AddDbContext<BlogContext>(options => options.UseSqlServer("Server=tcp:blogdata.database.windows.net,1433;Initial Catalog=BlogDB;Persist Security Info=False;User ID=yunus;Password=Asdf_1234;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
                 options =>
                 {
