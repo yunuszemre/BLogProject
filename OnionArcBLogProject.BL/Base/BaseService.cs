@@ -18,9 +18,11 @@ namespace OnionArcBLogProject.Service.Base
     public class BaseService<T> : ICoreService<T> where T : CoreEntity
     {
         private readonly BlogContext _context;
+        private readonly DbSet<T> _db;
         public BaseService(BlogContext blogContext)
         {
             _context = blogContext;
+            _db = _db;
         }
 
 
@@ -31,7 +33,7 @@ namespace OnionArcBLogProject.Service.Base
             {
                 using (TransactionScope ts = new TransactionScope())
                 {
-                    _context.Set<T>().AddRange(item);
+                    _db.AddRange(item);
                     return true;
                 }
             }
@@ -49,7 +51,7 @@ namespace OnionArcBLogProject.Service.Base
             {
                 using (TransactionScope ts = new TransactionScope())
                 {
-                    _context.Set<T>().AddRange(items);
+                   _db.AddRange(items);
                     return true;
                 }
             }
@@ -60,18 +62,19 @@ namespace OnionArcBLogProject.Service.Base
             }
         }
 
-        public bool Any(Expression<Func<T, bool>> exp) => _context.Set<T>().Any(exp);
+        public bool Any(Expression<Func<T, bool>> exp) => _db.Any(exp);
 
 
         public bool DeleteAll(Expression<Func<T, bool>> exp)
         {
-            throw new NotImplementedException();
+           _db.where(exp);
+           _db.SaveChanges();
         }
 
-        public List<T> GetActive() => _context.Set<T>().Where(x => x.Status == Core.Entity.Enum.Status.Active).ToList();
+        public List<T> GetActive() => _db.Where(x => x.Status == Core.Entity.Enum.Status.Active).ToList();
         public IQueryable<T> GetActive(params Expression<Func<T, object>>[] includes)
         {
-            var query = _context.Set<T>().Where(x => x.Status == Core.Entity.Enum.Status.Active);
+            var query = _db.Where(x => x.Status == Core.Entity.Enum.Status.Active);
             if (includes != null)
             {
                 query = includes.Aggregate(query, (current, include) => current.Include(include));
@@ -79,19 +82,19 @@ namespace OnionArcBLogProject.Service.Base
             return query;
         }
 
-        public List<T> GetAll() => _context.Set<T>().ToList();
+        public List<T> GetAll() => _db.ToList();
 
 
-        public T GetByDefault(Expression<Func<T, bool>> exp) => _context.Set<T>().FirstOrDefault(exp);
+        public T GetByDefault(Expression<Func<T, bool>> exp) => _db.FirstOrDefault(exp);
 
 
-        public T GetById(int id) => _context.Set<T>().Find(id);
+        public T GetById(int id) => _db.Find(id);
 
 
-        public T GetById(Guid id) => _context.Set<T>().Find(id);
+        public T GetById(Guid id) => _db.Find(id);
 
 
-        public List<T> GetDefault(Expression<Func<T, bool>> exp) => _context.Set<T>().Where(exp).ToList();
+        public List<T> GetDefault(Expression<Func<T, bool>> exp) => _db.Where(exp).ToList();
 
 
         public bool Remove(T item)
@@ -156,7 +159,7 @@ namespace OnionArcBLogProject.Service.Base
         {
             try
             {
-                _context.Set<T>().Update(item);
+                _db.Update(item);
                 return Save() > 0;
             }
             catch (Exception ex)
@@ -179,7 +182,7 @@ namespace OnionArcBLogProject.Service.Base
 
         public IQueryable<T> GetAll(params Expression<Func<T, object>>[] includes)
         {
-            var query = _context.Set<T>().AsQueryable();
+            var query = _db.AsQueryable();
             if (includes != null)
             {
                 query = includes.Aggregate(query, (current, include) => current.Include(include));
