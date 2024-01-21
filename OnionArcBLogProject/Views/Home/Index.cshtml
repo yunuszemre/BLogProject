@@ -10,7 +10,7 @@
 {
     <article class="col-12 col-md-6 tm-post">
         <hr class="tm-hr-primary">
-        <a asp-action="Post" asp-controller="Home" asp-route-id="@item.Id" class="effect-lily tm-post-link tm-pt-60">
+        <a asp-action="PostDetail" asp-controller="Home" asp-route-id="@item.Id" class="effect-lily tm-post-link tm-pt-60">
             <div class="tm-post-link-inner">
                 <img src="@item.ImagePath" alt="Image" class="img-fluid">
             </div>
@@ -19,7 +19,7 @@
                 <span class="position-absolute tm-new-badge">Yeni</span>
             }
             
-            <h2 class="tm-pt-30 tm-color-primary tm-post-title"><a asp-action="Post" asp-controller="Home" asp-route-id="@item.Id">@item.Title</a></h2>
+            <h2 class="tm-pt-30 tm-color-primary tm-post-title"><a asp-action="PostDetail" asp-controller="Home" asp-route-id="@item.Id">@item.Title</a></h2>
         </a>
         <p class="tm-pt-30">
             @{
@@ -58,7 +58,7 @@
         </div>
         
     </article>
-   
+  
     @*@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new {page}))*@
 
 }

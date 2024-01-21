@@ -7,6 +7,7 @@ using OnionArcBLogProject.WebUI.Areas.Admin.Models;
 
 namespace OnionArcBLogProject.WebUI.Areas.Admin.Controllers
 {
+    using OnionArcBLogProject.Entities.Enum;
     using X.PagedList;
     [Authorize]
     [Area("Admin")]
@@ -32,7 +33,7 @@ namespace OnionArcBLogProject.WebUI.Areas.Admin.Controllers
         //Create Satfasono gösterecek
         public IActionResult Create()
         {
-            ViewBag.Categories = new SelectList(_categoryService.GetActive(),"Id","CategoryName");
+            ViewBag.Categories = new SelectList(_categoryService.GetActive(), "Id", "CategoryName");
             return View();
         }
         [HttpPost]
@@ -59,7 +60,7 @@ namespace OnionArcBLogProject.WebUI.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 bool result = _postService.Add(post);
-                post.Status = Core.Entity.Enum.Status.None;
+                post.Status = Status.None;
                 if (result)
                 {
 
@@ -89,7 +90,7 @@ namespace OnionArcBLogProject.WebUI.Areas.Admin.Controllers
             Post updatedPost = null;
             if (ModelState.IsValid)
             {
-                updatedPost.Status = Core.Entity.Enum.Status.Updated;
+                updatedPost.Status = Status.Updated;
                 updatedPost.Title = post.Title;
                 updatedPost.PostDetail = post.PostDetail;
                 updatedPost.ModifiedDate = DateTime.Now;

@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnionArcBLogProject.Core.Entity
+namespace OnionArcBLogProject.DAL.Abstract
 {
-    public interface IEntity<T>
+    public interface IPostRepository
     {
-        T Id { get; set; }
     }
 }

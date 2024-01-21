@@ -4,6 +4,8 @@ using OnionArcBLogProject.Entities.Context;
 using OnionArcBLogProject.Service.Base;
 
 using Microsoft.AspNetCore.Authentication.Cookies;
+using OnionArcBLogProject.Entities;
+using Middleware;
 
 namespace OnionArcBLogProject
 {
@@ -16,7 +18,16 @@ namespace OnionArcBLogProject
             // Add services to the container.
             builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
             builder.Services.AddScoped(typeof(ICoreService<>), typeof(BaseService<>));//Icore service ile base service arasında bağlantı
-            builder.Services.AddDbContext<BlogContext>(options => options.UseSqlServer("Server=tcp:blogdata.database.windows.net,1433;Initial Catalog=BlogDB;Persist Security Info=False;User ID=yunus;Password=Asdf_1234;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
+            builder.Services.AddDbContext<BlogContext>(opt => opt.UseSqlServer(BlogConfiguration.GetConStr()));
+            //builder.Services.AddCors(options =>
+            //{
+            //    options.AddPolicy("AllowSpecificOrigin", builder =>
+            //    {
+            //        builder.AllowAnyOrigin()
+            //               .AllowAnyHeader()
+            //               .AllowAnyMethod();
+            //    });
+            //});
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
                 options =>
                 {
@@ -24,7 +35,8 @@ namespace OnionArcBLogProject
 
                 });
             var app = builder.Build();
-
+            app.RegisterMiddlewares();
+            //app.UseCors("AllowAnyOrigin");
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {

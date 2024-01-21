@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using OnionArcBLogProject.Core.Map;
 using OnionArcBLogProject.Entities.Entities;
 
 namespace OnionArcBLogProject.Entities.Map

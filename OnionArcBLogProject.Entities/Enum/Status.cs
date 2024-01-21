@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnionArcBLogProject.Core.Entity.Enum
+namespace OnionArcBLogProject.Entities.Enum
 {
     public enum Status
     {

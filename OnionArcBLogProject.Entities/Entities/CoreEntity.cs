@@ -1,11 +1,11 @@
-﻿using System;
+﻿using OnionArcBLogProject.Entities.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OnionArcBLogProject.Core.Entity.Enum;
 
-namespace OnionArcBLogProject.Core.Entity
+namespace OnionArcBLogProject.Entities.Entities
 {
     public class CoreEntity : IEntity<Guid>
     {
@@ -16,7 +16,7 @@ namespace OnionArcBLogProject.Core.Entity
 
             strings.FirstOrDefault(x => x.StartsWith("Bi"));
 
-            
+
         }
         public Guid Id { get; set; }
 
@@ -33,6 +33,5 @@ namespace OnionArcBLogProject.Core.Entity
         public string? ModifiedComputerName { get; set; }
 
         public string? ModifiedIp { get; set; }
-
     }
 }

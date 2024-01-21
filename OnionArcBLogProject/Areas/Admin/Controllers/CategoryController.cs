@@ -34,7 +34,7 @@ namespace OnionArcBLogProject.WebUI.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 bool result = _categoryService.Add(category);
-                category.Status = Core.Entity.Enum.Status.None;
+                category.Status = Entities.Enum.Status.None;
                 if (result)
                 {
 
@@ -64,7 +64,7 @@ namespace OnionArcBLogProject.WebUI.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 bool result = _categoryService.Update(category);
-                category.Status = Core.Entity.Enum.Status.Updated;
+                category.Status = Entities.Enum.Status.Updated;
                 if (result)
                 {
 

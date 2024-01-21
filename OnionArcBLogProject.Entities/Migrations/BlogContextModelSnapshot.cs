@@ -255,6 +255,20 @@ namespace OnionArcBLogProject.Entities.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AppUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("66412714-d7d6-4a86-8830-2bc3f4c6a351"),
+                            CreatedDate = new DateTime(2024, 1, 18, 21, 35, 43, 794, DateTimeKind.Local).AddTicks(8875),
+                            FirstName = "Admin",
+                            LastName = "Admin",
+                            ModifiedDate = new DateTime(2024, 1, 18, 21, 35, 43, 794, DateTimeKind.Local).AddTicks(8697),
+                            Status = 1,
+                            UserEmail = "admin@blog.com",
+                            UserName = "Admin",
+                            UserPassword = "Asdf_1234"
+                        });
                 });
 
             modelBuilder.Entity("OnionArcBLogProject.Entities.Entities.Comment", b =>

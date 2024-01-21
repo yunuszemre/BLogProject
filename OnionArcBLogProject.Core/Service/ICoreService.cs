@@ -1,16 +1,17 @@
-﻿using System;
+﻿using OnionArcBLogProject.Entities.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using OnionArcBLogProject.Core.Entity;
 
 namespace OnionArcBLogProject.Core.Service
 {
     public interface ICoreService<T> where T : CoreEntity
     {
         T GetById(int id);
+
 
         bool Update(T item);
 

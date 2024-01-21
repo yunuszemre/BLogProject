@@ -29,5 +29,14 @@ namespace OnionArcBLogProject.WebUI.Controllers
         {
               return View(_postService.GetDefault(x=>x.Title.Contains(q)));
         }
+        public IActionResult GetCats(Guid id)
+        {
+            var catIds = _categoryService.GetDefault(x=>x.Id == id).Select(x => new
+            {
+                categoryId = x.Id,
+                categoryName = x.CategoryName
+            }).ToList();
+            return Json(catIds);
+        }
     }
 }

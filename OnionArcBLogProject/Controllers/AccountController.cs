@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OnionArcBLogProject.Core.Service;
 using OnionArcBLogProject.Entities.Entities;
+using OnionArcBLogProject.Entities.Enum;
 using OnionArcBLogProject.WebUI.Models.ViewModels;
 using System.Security.Claims;
 
@@ -27,7 +28,7 @@ namespace OnionArcBLogProject.WebUI.Controllers
             {
                 User loggedUser = _userService.GetByDefault(x => x.UserEmail == user.UserEmail && x.UserPassword == user.UserPassword);
 
-                if (loggedUser.Status == Core.Entity.Enum.Status.Active)
+                if (loggedUser.Status == Status.Active)
                 {
 
 
@@ -39,7 +40,7 @@ namespace OnionArcBLogProject.WebUI.Controllers
                     new Claim(ClaimTypes.Name, loggedUser.FirstName),
                     new Claim(ClaimTypes.Surname, loggedUser.LastName),
                     new Claim(ClaimTypes.Email, loggedUser.UserEmail),
-                    new Claim("ImageUrl", loggedUser.ImageUrl)
+                    //new Claim("ImageUrl", loggedUser.ImageUrl)
                 };
 
                     var userIdentity = new ClaimsIdentity(claims, "login");
@@ -67,7 +68,7 @@ namespace OnionArcBLogProject.WebUI.Controllers
         public IActionResult Register(User user)
         {
             user.Title = "Kullanıcı";
-            user.Status = Core.Entity.Enum.Status.Active;
+            user.Status = Status.Active;
             user.Id= Guid.NewGuid();
             user.CreatedDate= DateTime.Now;
             user.ImageUrl = "Uploads/d91c0e95_492c_45a1_b5ef_64e597c71e48.png";
@@ -76,7 +77,7 @@ namespace OnionArcBLogProject.WebUI.Controllers
             if (ModelState.IsValid)
             {
                 bool result = _userService.Add(user);
-                user.Status = Core.Entity.Enum.Status.None;
+                user.Status = Status.None;
                 if (result)
                 {
 

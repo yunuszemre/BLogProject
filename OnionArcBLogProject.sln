@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnionArcBLogProject.DAL", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnionArcBLogProject.Core", "OnionArcBLogProject.Core\OnionArcBLogProject.Core.csproj", "{7869A70B-ED05-4B8D-85FD-E9EA42F2B06B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Middleware", "Middleware\Middleware.csproj", "{B546F79E-C3AB-4A99-9BBA-871E1BFAC0ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{7869A70B-ED05-4B8D-85FD-E9EA42F2B06B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7869A70B-ED05-4B8D-85FD-E9EA42F2B06B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7869A70B-ED05-4B8D-85FD-E9EA42F2B06B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B546F79E-C3AB-4A99-9BBA-871E1BFAC0ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B546F79E-C3AB-4A99-9BBA-871E1BFAC0ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B546F79E-C3AB-4A99-9BBA-871E1BFAC0ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B546F79E-C3AB-4A99-9BBA-871E1BFAC0ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

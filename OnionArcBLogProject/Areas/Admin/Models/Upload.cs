@@ -13,7 +13,7 @@ namespace OnionArcBLogProject.WebUI.Areas.Admin.Models
             {
                 if (file.ContentType.Contains("image"))
                 {
-                    if (file.Length <= 2097152)
+                    if (file.Length <= 10097152)
                     {
                         string uniqueName = $"{Guid.NewGuid().ToString().Replace("-", "_").ToLower()}.{file.ContentType.Split('/')[1]}";
                         var filePath = Path.Combine(uploads, uniqueName);

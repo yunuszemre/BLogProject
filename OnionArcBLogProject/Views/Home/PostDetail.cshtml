@@ -1,4 +1,6 @@
 ﻿@using System.Security.Claims;
+@using OnionArcBLogProject.Entities.Enum
+
 @model PostDetailVM
 
 <div class="row tm-row">
@@ -30,7 +32,7 @@
                     <h2 class="tm-color-primary tm-post-title">Yorumlar</h2>
                     @foreach (var comment in Model.Comments)
                     {
-                        if (comment.Status == OnionArcBLogProject.Core.Entity.Enum.Status.Active)
+                        if (comment.Status == Status.Active)
                         {
 
 
@@ -56,8 +58,8 @@
                         @if (@Context.User.FindFirst("Id") != null)
                         {
 
-
-                            <input type="hidden" name="userId" value="@Context.User.FindFirst("Id").Value.ToString()"/>
+                            <input type="hidden" name="categoryId" value="@Model.Post.CategroyId" />
+                            <input type="hidden" name="userId" value="@Context.User.FindFirst("Id").Value.ToString()" />
                             <input type="hidden" name="postId" value="@Model.Post.Id" />
                             <h2 class="tm-color-primary tm-post-title mb-4">Sizin yorumunuz</h2>
                             <div class="mb-4">
@@ -72,7 +74,7 @@
                         }
                         else
                         {
-                            
+
                         }
                     </form>
                 }
@@ -92,14 +94,47 @@
             </ul>
             <hr class="mb-3 tm-hr-primary">
             <h2 class="tm-mb-40 tm-post-title tm-color-primary">Related Posts</h2>
+            <ul id="postList"></ul>
 
-            <a href="#" class="d-block tm-mb-20">
-            <figure>
-            <img src="img/img-02.jpg" alt="Image" class="mb-3 img-fluid">
-            <figcaption class="tm-color-primary">Duis mollis diam nec ex viverra scelerisque a sit</figcaption>
-            </figure>
-            </a>
-            
+
         </div>
     </aside>
 </div>
+@section scripts {
+    <script>
+
+        $(document).ready(function () {
+            // Gönderilecek olan "id" değeri
+            var catId = $("input[name=categoryId]").val();
+            var url = "";
+
+            // GET isteği
+            $.ajax({
+                type: "GET",
+                url: "home/getpostsbycategory/e928ab0390fa4ff62b7f08dc185e78dd",
+                contentType: 'application/json; charset=utf-8',
+                // data: { id = 'e928ab03-90fa-4ff6-2b7f-08dc185e78dd' }
+                dataType: 'json',
+                success: function (response) {
+                    console.log(response)
+                    if (Array.isArray(response)) {
+                        response.forEach(function (post) {
+                            // Her bir postun title, description ve viewCount özelliklerini al
+                            var postInfo = {
+                                title: post.title,
+                                description: post.description,
+                                viewCount: post.viewCount
+                            };
+                            $("#postList").append("<li><strong>Title:</strong> " + postInfo.title + ", <strong>Description:</strong> " + postInfo.description + ", <strong>View Count:</strong> " + postInfo.viewCount + "</li>");
+                        });
+                    }
+                },
+                error: function (error) {
+                    // Hata oluştuğunda yapılacak işlemler
+                    console.error("İsteğin tamamlanırken bir hata oluştu.", error);
+                }
+            });
+        });
+
+    </script>
+}  

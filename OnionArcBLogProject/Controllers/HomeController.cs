@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using OnionArcBLogProject.Core.Service;
 using OnionArcBLogProject.Entities.Context;
 using OnionArcBLogProject.Entities.Entities;
 using OnionArcBLogProject.Models;
 using OnionArcBLogProject.WebUI.Models.ViewModels;
 using System.Diagnostics;
+using System.Web.Helpers;
 using X.PagedList;
 
 namespace OnionArcBLogProject.Controllers
@@ -37,8 +39,8 @@ namespace OnionArcBLogProject.Controllers
             return View(_postService.GetDefault(x => x.CategroyId == id));
         }
 
-        [HttpGet("Post/{id?}")]
-        public IActionResult Post(Guid id)
+        [HttpGet("PostDetail/{id?}")]
+        public IActionResult PostDetail(Guid id)
         {
             Post readedPost = _postService.GetById(id);
             readedPost.ViewCount += 1;
@@ -48,19 +50,37 @@ namespace OnionArcBLogProject.Controllers
             vm.Category = _catService.GetById(readedPost.CategroyId);
             vm.Post = readedPost;
             vm.User = _userService.GetById(readedPost.UserId);
-            vm.Comments = _commentService.GetDefault(x=>x.PostId == readedPost.Id).ToList();
-            vm.Categories= _catService.GetActive().ToList();
+            vm.Comments = _commentService.GetDefault(x => x.PostId == readedPost.Id).ToList();
+            vm.Categories = _catService.GetActive().ToList();
 
             return View(vm);
         }
         public List<Post> GetRandomPosts()
         {
             List<Post> posts = new List<Post>();
-            
-            
-           posts = _postService.GetActive().ToList();
-           
+
+
+            posts = _postService.GetActive().ToList();
+
             return posts;
+        }
+        [HttpGet]
+        public IActionResult GetPostsByCategory(Guid id)
+        {
+            var posts = _postService.GetDefault(x => x.CategroyId == id).Select(x => new RelatedModel
+            {
+                Title = x.Title,
+                Description = x.PostDetail,
+                ViewCount = x.ViewCount
+            }).ToList();
+            var json = JsonConvert.SerializeObject(posts);
+            return Json(posts);
+        }
+        class RelatedModel
+        {
+            public string Title { get; set; }
+            public string Description { get; set; }
+            public int ViewCount { get; set; }
         }
     }
 }

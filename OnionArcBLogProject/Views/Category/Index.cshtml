@@ -1,4 +1,5 @@
 ﻿@model List<Category>
+@using OnionArcBLogProject.Entities.Enum
 
 @{
     ViewData["Title"] = "Kategoriler";
@@ -26,7 +27,7 @@
                     @{int count=0;}
                 @foreach (var item in category.Posts)
                 {
-                    if (item.Status == OnionArcBLogProject.Core.Entity.Enum.Status.Active)
+                    if (item.Status == Status.Active)
                     {
                         count += 1;
                     }

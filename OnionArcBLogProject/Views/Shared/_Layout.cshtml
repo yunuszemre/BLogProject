@@ -81,7 +81,7 @@
                         </a>
                     </li>
                     <li class="tm-nav-item">
-                        <a href="contact.html" class="tm-nav-link">
+                        <a asp-action="Create" asp-controller="Post" asp-area="" class="tm-nav-link">
                             <i class="fas fa-pen"></i>
                             Post Ekle
                         </a>
@@ -173,6 +173,7 @@
     <script src="~/FrontTemplate/js/jquery.min.js"></script>
     <script src="~/FrontTemplate/js/templatemo-script.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    @RenderSection("css", required: false)
 </body>
 
 </html>

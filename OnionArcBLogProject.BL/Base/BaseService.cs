@@ -6,14 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.EntityFrameworkCore;
-using OnionArcBLogProject.Core.Entity;
 using OnionArcBLogProject.Core.Service;
 using OnionArcBLogProject.Entities.Context;
 
 namespace OnionArcBLogProject.Service.Base
 {
-    using OnionArcBLogProject.Core.Entity.Enum;
     using OnionArcBLogProject.Entities.Entities;
+    using OnionArcBLogProject.Entities.Enum;
 
     public class BaseService<T> : ICoreService<T> where T : CoreEntity
     {
@@ -22,7 +21,7 @@ namespace OnionArcBLogProject.Service.Base
         public BaseService(BlogContext blogContext)
         {
             _context = blogContext;
-            _db = _db;
+            _db = _context.Set<T>();
         }
 
 
@@ -67,14 +66,14 @@ namespace OnionArcBLogProject.Service.Base
 
         public bool DeleteAll(Expression<Func<T, bool>> exp)
         {
-           _db.where(exp);
-           _db.SaveChanges();
+            _db.Where(exp);
+            return false;
         }
 
-        public List<T> GetActive() => _db.Where(x => x.Status == Core.Entity.Enum.Status.Active).ToList();
+        public List<T> GetActive() => _db.Where(x => x.Status == Status.Active).ToList();
         public IQueryable<T> GetActive(params Expression<Func<T, object>>[] includes)
         {
-            var query = _db.Where(x => x.Status == Core.Entity.Enum.Status.Active);
+            var query = _db.Where(x => x.Status == Status.Active);
             if (includes != null)
             {
                 query = includes.Aggregate(query, (current, include) => current.Include(include));
@@ -99,7 +98,7 @@ namespace OnionArcBLogProject.Service.Base
 
         public bool Remove(T item)
         {
-            item.Status = Core.Entity.Enum.Status.Deleted; return Update(item);
+            item.Status = Status.Deleted; return Update(item);
         }
 
         public bool Remove(Guid id)
@@ -109,7 +108,7 @@ namespace OnionArcBLogProject.Service.Base
                 using (TransactionScope ts = new TransactionScope())
                 {
                     T item = GetById(id);
-                    item.Status = Core.Entity.Enum.Status.Deleted;
+                    item.Status = Status.Deleted;
                     ts.Complete();
                     return Update(item);
                     

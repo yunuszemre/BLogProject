@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using OnionArcBLogProject.Core.Entity;
+﻿using Microsoft.EntityFrameworkCore;
 using OnionArcBLogProject.Entities.Entities;
+using OnionArcBLogProject.Entities.Enum;
 using OnionArcBLogProject.Entities.Map;
 
 namespace OnionArcBLogProject.Entities.Context
@@ -23,11 +18,11 @@ namespace OnionArcBLogProject.Entities.Context
         {
 
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=tcp:blogdata.database.windows.net,1433;Initial Catalog=BlogDB;Persist Security Info=False;User ID=yunus;Password=Asdf_1234;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-            base.OnConfiguring(optionsBuilder);
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer(@"Server=DESKTOP-64CD8HQ\\EMRE;Initial Catalog=BlogDB;Persist Security Info=False;Trusted_Connection = true;ultipleActiveResultSets=True");
+        //    base.OnConfiguring(optionsBuilder);
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -38,6 +33,20 @@ namespace OnionArcBLogProject.Entities.Context
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
 
             modelBuilder.ApplyConfiguration(new PostConfiguration());
+            modelBuilder.Entity<User>().HasData(
+                new User()
+                {
+                    Id = Guid.NewGuid(),
+                    CreatedDate = DateTime.Now,
+                    LastName = "Admin",
+                    FirstName = "Admin",
+                    Status = Status.Active,
+                    UserEmail = "admin@blog.com",
+                    UserPassword = "Asdf_1234",
+                    UserName = "Admin",
+                    
+                }
+                );
 
             base.OnModelCreating(modelBuilder);
         }
@@ -73,6 +82,7 @@ namespace OnionArcBLogProject.Entities.Context
             }
             return base.SaveChanges();
         }
+        
     }
 
 }
