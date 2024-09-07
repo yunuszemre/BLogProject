@@ -259,11 +259,11 @@ namespace OnionArcBLogProject.Entities.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("66412714-d7d6-4a86-8830-2bc3f4c6a351"),
-                            CreatedDate = new DateTime(2024, 1, 18, 21, 35, 43, 794, DateTimeKind.Local).AddTicks(8875),
+                            Id = new Guid("6e803dd5-c9d2-4e75-96fb-49f0249924b4"),
+                            CreatedDate = new DateTime(2024, 9, 4, 17, 43, 3, 893, DateTimeKind.Local).AddTicks(2658),
                             FirstName = "Admin",
                             LastName = "Admin",
-                            ModifiedDate = new DateTime(2024, 1, 18, 21, 35, 43, 794, DateTimeKind.Local).AddTicks(8697),
+                            ModifiedDate = new DateTime(2024, 9, 4, 17, 43, 3, 893, DateTimeKind.Local).AddTicks(2525),
                             Status = 1,
                             UserEmail = "admin@blog.com",
                             UserName = "Admin",

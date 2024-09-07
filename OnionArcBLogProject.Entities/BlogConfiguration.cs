@@ -15,9 +15,8 @@ namespace OnionArcBLogProject.Entities
             //C:\Users\Emre\source\repos\OnionArcBLogProject\OnionArcBLogProject\OnionArcBLogProject.WebUI
             ConfigurationManager configurationManager = new();
             configurationManager.SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../OnionArcBLogProject"));
-            configurationManager.AddJsonFile("appsettings.json");
-            var conStr = configurationManager.GetConnectionString("SqlServer");
-            return configurationManager.GetConnectionString("SqlServer");
+            configurationManager.AddJsonFile("appsettings.json", false, reloadOnChange: true);
+            return configurationManager.GetConnectionString("localDb");
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿@using System.Security.Claims;
 @using OnionArcBLogProject.Entities.Enum
+@using System.Text.RegularExpressions
 
 @model PostDetailVM
 
@@ -18,12 +19,8 @@
                 <h2 class="pt-2 tm-color-primary tm-post-title">@Model.Post.Title</h2>
                 <p class="tm-mb-10">@Model.User.UserName, tarafından @Model.Post.CreatedDate.Value.ToShortDateString() tarihinde eklendi</p>
                 <p>
-                    @Model.Post.PostDetail
+                    @Regex.Replace(Model.Post.PostDetail, "<.*?>", String.Empty)
                 </p>
-                <p>
-
-                </p>
-                <span class="d-block text-right tm-color-primary">@Model.Category.Status</span>
             </div>
 
             <!-- Comments -->
@@ -32,44 +29,43 @@
                     <h2 class="tm-color-primary tm-post-title">Yorumlar</h2>
                     @foreach (var comment in Model.Comments)
                     {
-                        if (comment.Status == Status.Active)
-                        {
 
 
-                            <hr class="tm-hr-primary tm-mb-45">
-                            <div class="tm-comment tm-mb-15">
-                                <figure class="tm-comment-figure">
-                                    <img src="~/FrontTemplate/img/comment-1.jpg" alt="Image" class="mb-2 rounded-circle img-thumbnail">
-                                    <figcaption class="tm-color-primary text-center"></figcaption>
-                                </figure>
-                                <div>
-                                    <p>
-                                        @comment.CommentText
-                                    </p>
-                                    <div class="d-flex justify-content-between">
-                                        <a href="#" class="tm-color-primary">REPLY</a>
-                                        <span class="tm-color-primary">@comment.User.FirstName, @comment.CreatedDate.Value.ToShortDateString()</span>
-                                    </div>
+
+                        <hr class="tm-hr-primary tm-mb-45">
+                        <div class="tm-comment tm-mb-15">
+                            <figure class="tm-comment-figure">
+                                <img src="~/FrontTemplate/img/comment-1.jpg" alt="Image" class="mb-2 rounded-circle img-thumbnail">
+                                <figcaption class="tm-color-primary text-center"></figcaption>
+                            </figure>
+                            <div>
+                                <p>
+                                    @comment.CommentText
+                                </p>
+                                <div class="d-flex justify-content-between">
+                                    <a href="#" class="btn btn-primary">Yanıtla</a>
+                                    <span class="tm-color-primary">@comment.User.FirstName, @comment.CreatedDate.Value.ToShortDateString()</span>
                                 </div>
                             </div>
-                        }
+                        </div>
+
                     }
                     <form asp-action="Create" asp-controller="Comment" asp-area="Admin" method="post" class="mb-5 tm-comment-form">
                         @if (@Context.User.FindFirst("Id") != null)
                         {
 
                             <input type="hidden" name="categoryId" value="@Model.Post.CategroyId" />
-                            <input type="hidden" name="userId" value="@Context.User.FindFirst("Id").Value.ToString()" />
+                            <input type="hidden" name="userId" value="@Context.User.FindFirst("Id")!.Value.ToString()" />
                             <input type="hidden" name="postId" value="@Model.Post.Id" />
                             <h2 class="tm-color-primary tm-post-title mb-4">Sizin yorumunuz</h2>
                             <div class="mb-4">
-                                <input class="form-control" type="text" disabled placeholder="@Context.User.FindFirst(ClaimTypes.Name).Value @Context.User.FindFirst(ClaimTypes.Surname).Value">
+                                <input class="form-control" type="text" disabled placeholder="@Context.User.FindFirst(ClaimTypes.Name)!.Value @Context.User.FindFirst(ClaimTypes.Surname)!.Value">
                             </div>
                             <div class="mb-4">
                                 <textarea class="form-control" name="commentMessage" rows="6" placeholder="Yorumunuzu ekleyin"></textarea>
                             </div>
                             <div class="text-right">
-                                <button type="submit" class="tm-btn tm-btn-primary tm-btn-small">Gönder</button>
+                                <button type="submit" class="tm-btn tm-btn-primary tm-btn-small">KAYDET</button>
                             </div>
                         }
                         else
@@ -100,41 +96,85 @@
         </div>
     </aside>
 </div>
+@section css {
+        ul {
+            list-style-type: none; /* Liste noktalarını kaldırır */
+            padding: 5px; /* Varsayılan padding'i kaldırır */
+            margin: 0; /* Varsayılan margin'i kaldırır */
+        }
+        #postList li{
+    @* border = 0.5px solid #00CCCC; *@
+    @* padding = 5px; *@
+    @* width = 320px; *@
+    @* display = flex; *@
+        display = flex;
+        borderRadius = 5px;
+        marginBottom = 3px;
+        list-style-type: none;
+        font-family: Arial, sans-serif;
+        padding: 10px;
+        margin: 5px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+
+    }
+
+
+#postList li strong {
+  font-weight: bold;
+}
+
+#postList li br {
+  margin-bottom: 5px;
+}
+
+#postList li:nth-child(odd) {
+  background-color: #f1f1f1;
+}
+
+#postList li:hover {
+  background-color: #e1e1e1;
+  border-color: #ccc;
+}
+}
 @section scripts {
     <script>
-
-        $(document).ready(function () {
+        var catId = $("input[name=categoryId]").val();
+        //
+        const url = 'https://localhost:44375/Home/GetPostsByCategory?id=589e96ce-9972-4401-5b94-08dccd828095';
+        console.log(url);
+        document.addEventListener('DOMContentLoaded', function () {
             // Gönderilecek olan "id" değeri
-            var catId = $("input[name=categoryId]").val();
-            var url = "";
-
+            var catId = document.querySelector('input[name=categoryId]').value;
+            console.log(catId);
             // GET isteği
-            $.ajax({
-                type: "GET",
-                url: "home/getpostsbycategory/e928ab0390fa4ff62b7f08dc185e78dd",
-                contentType: 'application/json; charset=utf-8',
-                // data: { id = 'e928ab03-90fa-4ff6-2b7f-08dc185e78dd' }
-                dataType: 'json',
-                success: function (response) {
-                    console.log(response)
-                    if (Array.isArray(response)) {
-                        response.forEach(function (post) {
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if (Array.isArray(data)) {
+                        const postList = document.getElementById('postList');
+                        data.forEach(post => {
                             // Her bir postun title, description ve viewCount özelliklerini al
                             var postInfo = {
                                 title: post.title,
                                 description: post.description,
                                 viewCount: post.viewCount
                             };
-                            $("#postList").append("<li><strong>Title:</strong> " + postInfo.title + ", <strong>Description:</strong> " + postInfo.description + ", <strong>View Count:</strong> " + postInfo.viewCount + "</li>");
+                            const listItem = document.createElement('li');
+
+                            listItem.innerHTML = `<strong>Title:</strong> ${postInfo.title}<strong>
+                                    Description:</strong> ${postInfo.description}<strong>View Count:</strong> ${postInfo.viewCount}`;
+                            postList.appendChild(listItem);
                         });
                     }
-                },
-                error: function (error) {
+                })
+                .catch(error => {
                     // Hata oluştuğunda yapılacak işlemler
                     console.error("İsteğin tamamlanırken bir hata oluştu.", error);
-                }
-            });
+                });
         });
 
     </script>
+
 }  

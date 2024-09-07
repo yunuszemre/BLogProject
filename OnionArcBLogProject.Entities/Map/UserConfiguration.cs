@@ -14,6 +14,7 @@ namespace OnionArcBLogProject.Entities.Map
         public override void Configure(EntityTypeBuilder<User> builder)
         {
             builder.ToTable("AppUsers");
+            builder.HasKey(x => x.Id);
             builder.Property(x => x.FirstName).IsRequired(true).HasMaxLength(100);
             builder.Property(x => x.LastName).IsRequired(true).HasMaxLength(100);
             builder.Property(x => x.Title).IsRequired(false).HasMaxLength(100);

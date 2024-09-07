@@ -19,15 +19,15 @@ namespace OnionArcBLogProject
             builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
             builder.Services.AddScoped(typeof(ICoreService<>), typeof(BaseService<>));//Icore service ile base service arasında bağlantı
             builder.Services.AddDbContext<BlogContext>(opt => opt.UseSqlServer(BlogConfiguration.GetConStr()));
-            //builder.Services.AddCors(options =>
-            //{
-            //    options.AddPolicy("AllowSpecificOrigin", builder =>
-            //    {
-            //        builder.AllowAnyOrigin()
-            //               .AllowAnyHeader()
-            //               .AllowAnyMethod();
-            //    });
-            //});
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyHeader()
+                           .AllowAnyMethod();
+                });
+            });
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
                 options =>
                 {
@@ -51,7 +51,7 @@ namespace OnionArcBLogProject
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseCors("AllowSpecificOrigin");
             app.MapControllerRoute(
               name: "areas",
               pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
