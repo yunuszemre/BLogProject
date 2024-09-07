@@ -6,6 +6,7 @@ using OnionArcBLogProject.Entities.Context;
 using OnionArcBLogProject.Entities.Entities;
 using OnionArcBLogProject.Models;
 using OnionArcBLogProject.WebUI.Models.ViewModels;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 using System.Web.Helpers;
 using X.PagedList;
@@ -31,15 +32,45 @@ namespace OnionArcBLogProject.Controllers
 
         public IActionResult Index()
         {
-            return View(_postService.GetActive(t0 => t0.User, t0 => t0.Comments).ToList());
+            var posts = _postService.GetActive(t0 => t0.User, t0 => t0.Comments).Select(x=> new PostModel
+            {
+                Id = x.Id,
+                CategoryName = x.Category.CategoryName,
+                ImagePath = x.ImagePath,
+                CreatedDate = x.CreatedDate??default,
+                PostAuthor = new UserModel
+                {
+                    FirstName = x.User.FirstName,
+                    LastName = x.User.LastName,
+                    ImageUrl = x.User.ImageUrl
+                },
+                Comments = x.Comments.Select(y=>new CommentModel
+                {
+                    CommentText = y.CommentText,
+                    CommentAuthor = new UserModel
+                    {
+                        FirstName = y.User.FirstName,
+                        LastName = y.User.LastName,
+                        ImageUrl = y.User.ImageUrl
+                    }
+                }).ToList(),
+                PostDetail = x.PostDetail,
+                Tags = x.Tags,
+                Title = x.Title,
+                ViewCount = x.ViewCount
+            }).ToList();
+            return View(posts);
         }
 
         public IActionResult PostsByCatId(Guid id)
         {
             return View(_postService.GetDefault(x => x.CategroyId == id));
         }
-
-        [HttpGet("PostDetail/{id?}")]
+        public JsonResult Geee()
+        {
+            return Json("Geee");
+        }
+        
         public IActionResult PostDetail(Guid id)
         {
             Post readedPost = _postService.GetById(id);
@@ -64,8 +95,8 @@ namespace OnionArcBLogProject.Controllers
 
             return posts;
         }
-        [HttpGet]
-        public IActionResult GetPostsByCategory(Guid id)
+        
+        public JsonResult GetPostsByCategory(Guid id)
         {
             var posts = _postService.GetDefault(x => x.CategroyId == id).Select(x => new RelatedModel
             {
@@ -81,6 +112,37 @@ namespace OnionArcBLogProject.Controllers
             public string Title { get; set; }
             public string Description { get; set; }
             public int ViewCount { get; set; }
+        }
+        public class PostModel
+        {
+            public Guid Id { get; set; }
+            public string Title { get; set; }
+
+            public string PostDetail { get; set; }
+
+            public string Tags { get; set; }
+
+            public string? ImagePath { get; set; }
+
+            public int ViewCount { get; set; }
+            public UserModel PostAuthor { get; set; }
+            public virtual string? CategoryName { get; set; }
+            public DateTime CreatedDate { get; set; }
+
+            public virtual List<CommentModel> Comments { get; set; }
+
+        }
+        public class UserModel
+        {
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public string ImageUrl { get; set; }
+        }
+        public class CommentModel
+        {
+            public string CommentText { get; set; }
+            public string UserName { get; set; }
+            public UserModel CommentAuthor { get; set; }
         }
     }
 }

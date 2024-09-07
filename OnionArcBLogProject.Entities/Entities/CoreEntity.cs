@@ -12,9 +12,9 @@ namespace OnionArcBLogProject.Entities.Entities
         public CoreEntity()
         {
             List<string> strings = new List<string>();
-            strings.Add("BilgeAdam");
+            strings.Add("yunuszemre");
 
-            strings.FirstOrDefault(x => x.StartsWith("Bi"));
+            strings.FirstOrDefault(x => x.StartsWith("yu"));
 
 
         }

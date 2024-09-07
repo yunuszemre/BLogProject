@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using OnionArcBLogProject.Entities.Entities;
 using OnionArcBLogProject.Entities.Enum;
 using OnionArcBLogProject.Entities.Map;
@@ -20,7 +21,7 @@ namespace OnionArcBLogProject.Entities.Context
         }
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
-        //    optionsBuilder.UseSqlServer(@"Server=DESKTOP-64CD8HQ\\EMRE;Initial Catalog=BlogDB;Persist Security Info=False;Trusted_Connection = true;ultipleActiveResultSets=True");
+        //    optionsBuilder.UseSqlServer(BlogConfiguration.GetConStr());
         //    base.OnConfiguring(optionsBuilder);
         //}
 

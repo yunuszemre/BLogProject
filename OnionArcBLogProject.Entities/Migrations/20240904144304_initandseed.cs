@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OnionArcBLogProject.Entities.Migrations
 {
-    public partial class init : Migration
+    public partial class initandseed : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -125,6 +125,11 @@ namespace OnionArcBLogProject.Entities.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.InsertData(
+                table: "AppUsers",
+                columns: new[] { "Id", "CreatedComputerName", "CreatedDate", "CreatedIp", "FirstName", "ImageUrl", "LastIpAdress", "LastLogin", "LastName", "ModifiedComputerName", "ModifiedDate", "ModifiedIp", "Status", "Title", "UserEmail", "UserName", "UserPassword" },
+                values: new object[] { new Guid("6e803dd5-c9d2-4e75-96fb-49f0249924b4"), null, new DateTime(2024, 9, 4, 17, 43, 3, 893, DateTimeKind.Local).AddTicks(2658), null, "Admin", null, null, null, "Admin", null, new DateTime(2024, 9, 4, 17, 43, 3, 893, DateTimeKind.Local).AddTicks(2525), null, 1, null, "admin@blog.com", "Admin", "Asdf_1234" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_PostId",

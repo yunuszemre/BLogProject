@@ -1,12 +1,14 @@
-﻿@model List<Post>
+﻿@model List<PostModel>
+@using System.Text.RegularExpressions
 @using X.PagedList
 @using X.PagedList.Mvc.Core
+@using static OnionArcBLogProject.Controllers.HomeController
 @{
     ViewData["Title"] = "Anasayfa";
 
 }
 
-@foreach (Post item in Model)
+@foreach (PostModel item in Model)
 {
     <article class="col-12 col-md-6 tm-post">
         <hr class="tm-hr-primary">
@@ -14,52 +16,109 @@
             <div class="tm-post-link-inner">
                 <img src="@item.ImagePath" alt="Image" class="img-fluid">
             </div>
-            @if (item.CreatedDate.Value.AddDays(5) >= DateTime.Now)
+            @if (item.CreatedDate.AddDays(5) >= DateTime.Now)
             {
                 <span class="position-absolute tm-new-badge">Yeni</span>
             }
-            
+
             <h2 class="tm-pt-30 tm-color-primary tm-post-title"><a asp-action="PostDetail" asp-controller="Home" asp-route-id="@item.Id">@item.Title</a></h2>
         </a>
         <p class="tm-pt-30">
             @{
                 if (item.PostDetail.Length < 100)
                 {
-                    @item.PostDetail
+                    @Regex.Replace(item.PostDetail, "<.*?>", String.Empty)
+                    
                 }
                 else
                 {
-                    @item.PostDetail.Substring(0,100)
+                    @Regex.Replace(item.PostDetail.Substring(0, 100), "<.*?>", String.Empty)
                     
+
                 }
             }
 
         </p>
         <div class="d-flex justify-content-between tm-pt-15">
             <span class="tm-color-primary">@item.Tags</span>
-            <span class="tm-color-primary">@item.CreatedDate.Value.ToShortDateString()</span>
+            <span class="tm-color-primary">@item.CreatedDate.ToShortDateString()</span>
         </div>
         <hr>
         <div class="d-flex justify-content-between tm-pt-15">
             <span style="display: block">@item.Comments.Count adet yorum</span>
-            <span style="display: block">@item.User.UserName</span>
+            <span style="display: block">@item.PostAuthor.FirstName @item.PostAuthor.LastName</span>
             <span style="display: block">@item.ViewCount kez okundu</span>
         </div>
-        <div class="d-flex justify-content-between">
+
+        <ul class="justify-content-between comment-area">
             @{
                 foreach (var comment in item.Comments)
                 {
-                    <span>
-                        @comment.CommentText
-                    </span>
-                    <br />
+                    <li class="comment-container">
+                        <div class="comment-header">
+                            <img src="@comment.CommentAuthor.ImageUrl" alt="Profil Resmi" class="profile-pic">
+                            <span class="username">@comment.CommentAuthor.FirstName @comment.CommentAuthor.LastName</span>
+                            <span class="like-icon">👍</span>
+                        </div>
+                        <div class="comment-body">
+                            <p class="comment-text">@Regex.Replace(comment.CommentText, "<.*?>", String.Empty)</p>
+                        </div>
+                    </li>
                 }
             }
-        </div>
-        
+        </ul>
+
     </article>
-  
-    @*@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new {page}))*@
+
+}
+@section css {
+    .comment-area {
+        list-style-type: none; /* Liste noktalarını kaldırır */
+        padding: 5px; /* Varsayılan padding'i kaldırır */
+        margin: 0; /* Varsayılan margin'i kaldırır */
+        @* border: 1px solid #ccc; *@
+        border-radius: 10px;
+
+    }    
+    .comment-container {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    width: 400px;
+    margin: 20px 0;
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.username {
+    flex-grow: 1;
+    font-weight: bold;
+}
+
+.like-icon {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.comment-body {
+    padding-left: 50px; /* Profil resmi boyutuna göre ayarlandı */
+}
+
+.comment-text {
+    margin: 0;
+}
 
 }
 
